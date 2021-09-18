@@ -40,3 +40,5 @@ Thymeleaf로 Html 수정 완료
           th:each="item: ${items}" each문 
      
           th:if="${param.status}" RedirectAttributes으로 true일 경우에만 item에 "저장완료" 끼어넣기
+ 
+예정::::상품 ID,상품명,가격,수량 text 메시지 변수화 예정-> 국제화(message.properties에 영어,한글 따로 저장),Input에 잘못된 서식으로 입력하였을때 오류메시지 추가 예정
