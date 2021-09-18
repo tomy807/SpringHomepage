@@ -28,3 +28,15 @@ Web: ItemController
 
 2 DAY
 
+Thymeleaf로 Html 수정 완료
+          <html xmlns:th="http://www.thymeleaf.org">
+               
+          th:href="@{/css/bootstrap.min.css}"
+          
+          th:onclick="|location.href='@{/basic/items/add}'|" URL표현식:@{...}
+          
+          th:href="@{|/basic/items/${item.id}|}" URL표현식:@{...}, ||리터럴로 string,변수표현식 간단 수정
+     
+          th:each="item: ${items}" each문 
+     
+          th:if="${param.status}" RedirectAttributes으로 true일 경우에만 item에 "저장완료" 끼어넣기
