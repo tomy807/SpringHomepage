@@ -18,10 +18,13 @@ Web: ItemController
             
             /basic/items/{itemId}/edit(POST) 해당 아이템 ItemRepository에 update,redirect /basic/items/{itemId}
 
-/basic/items/add(POST)한 후에 새로고침하면 아이템 저장 중복 오류 발생-->/basic/items/{itemId}(GET)으로 GET방식으로Redirect
+오류::::/basic/items/add(POST)한 후에 새로고침하면 아이템 저장 중복 오류 발생-->/basic/items/{itemId}(GET)으로 GET방식으로Redirect
 
-저장한후,정상적으로 저장됨을 알리기 위해 RedirectAttributes에 {status: true}을 넣고 redirect 할때 함께 이동(status가 true일떄만 html으로 "저장완료"을 생성할 예정)
+저장한후,정상적으로 저장됨을 알리기 위해 RedirectAttributes에 {status: true}을 넣고 redirect 할때 함께 이동
 
-Thymeleaf로 html 수정예정
+(status가 true일떄만 html으로 "저장완료"을 생성할 예정)
+
+예정::::Thymeleaf로 html 수정예정
+
 2 DAY
 
