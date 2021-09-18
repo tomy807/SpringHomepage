@@ -1,8 +1,11 @@
 <!DOCTYPE HTML>
-<html>
+<!--thymeleaf 사용 시작-->
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
-    <link href="../css/bootstrap.min.css" rel="stylesheet">
+<!--링크 URL 표현식: @{...}-->
+    <link th:href="@{/css/bootstrap.min.css}"
+            href="../css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 <div class="container" style="max-width: 600px">
@@ -11,8 +14,10 @@
     </div>
     <div class="row">
         <div class="col">
+<!--리터럴 사용 onclick="location.href='링크 주소'"  th "" 안에서 =은 계산처리 되므로 ||으로 묶어준다.-->
             <button class="btn btn-primary float-end"
-                    onclick="location.href='addForm.html'" type="button">상품
+                    onclick="location.href='addForm.html'"
+                    th:onclick="|location.href='@{/basic/items/add}'|" type="button">상품
                 등록</button>
         </div>
     </div>
@@ -28,17 +33,12 @@
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <td><a href="item.html">1</a></td>
-                <td><a href="item.html">테스트 상품1</a></td>
-                <td>10000</td>
-                <td>10</td>
-            </tr>
-            <tr>
-                <td><a href="item.html">2</a></td>
-                <td><a href="item.html">테스트 상품2</a></td>
-                <td>20000</td>
-                <td>20</td>
+<!-- itemController 의  @GetMapping 에서 model.addAttribute("items", items);으로 model 으로 전달-->
+            <tr th:each="item: ${items}">
+                <td><a href="item.html" th:href="@{/basic/items/{itemId}(itemId=${item.id})}" th:text="${item.id}">1</a></td>
+                <td><a href="item.html" th:href="@{|/basic/items/${item.id}|}" th:text="${item.itemName}">테스트 상품1</a></td>
+                <td th:text="${item.price}">10000</td>
+                <td th:text="${item.quantity}">10</td>
             </tr>
             </tbody>
         </table>

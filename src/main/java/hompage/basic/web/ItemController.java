@@ -30,7 +30,7 @@ public class ItemController {
     @GetMapping("/{itemId}")
     public String item(@PathVariable long itemId, Model model) {
         Item item = itemRepository.findById(itemId);
-        model.addAttribute(model);
+        model.addAttribute("item", item);
         return "html/item";
     }
 
@@ -40,13 +40,14 @@ public class ItemController {
     }
 
     //아이템 저장
+    //아이템 저장하고 새로고침 누를시 똑같은 아이템이 중복 저장되는 버그 발생-> redirect 으로 POST가 아니라 GET으로
     //POST-HTML Form으로 얻어온 Item을 저장하고 해당 아이템페이지로 redirect 해준다.
     @PostMapping("/add")
     public String addItem(@ModelAttribute Item item, RedirectAttributes redirectAttributes) {
         Item saveItem = itemRepository.save(item);
         redirectAttributes.addAttribute("itemId", saveItem.getId());
         redirectAttributes.addAttribute("status", true);
-        return "redirect:/html/items/{itemId}";
+        return "redirect:/basic/items/{itemId}";
     }
 
     //아이템 수정화면 보여주기
@@ -64,14 +65,14 @@ public class ItemController {
     @PostMapping("/{itemId}/edit")
     public String edit(@PathVariable Long itemId, @ModelAttribute Item item) {
         itemRepository.update(itemId, item);
-        return "redirect:/html/items/{itemId}";
+        return "redirect:/basic/items/{itemId}";
     }
 
 
     //Test 하기 위해 미리 데이터 집어넣기
     @PostConstruct
     public void  init(){
-        itemRepository.save(new Item("사용자1", 10000, 10));
-        itemRepository.save(new Item("사용자2", 20000, 12));
+        itemRepository.save(new Item("상품1", 10000, 10));
+        itemRepository.save(new Item("상품2", 20000, 12));
     }
 }
