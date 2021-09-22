@@ -87,3 +87,49 @@ th:object으로 Model model의 아이템 Object 사용하여 th:field 적용->in
      4.총금액은 10000이상
     
 위와 같은 조건으로 Validation 적용할것.     
+
+4 DAY
+
+1.@Validated,데이터 모델의 @NotBlank,...
+->@Validated된 @ModelAttribute(Item 모델들의 Fields) 모두 Validator 의 support,validate을 자동으로 검증해줌
+
+(build.gradle 에 implementation 'org.springframework.boot:spring-boot-starter-validation' 추가하면)
+
+
+검증 방법은 애노테이션을 이용: 
+
+        @NotBlank : 빈값 + 공백만 있는 경우를 허용하지 않는다.
+        @NotNull : null 을 허용하지 않는다.
+        @Range(min = 1000, max = 1000000) : 범위 안의 값이어야 한다.
+        @Max(9999) : 최대 9999까지만 허용한다.
+
+BindingResult->addError(new FieldError),addError(new ObjectError) 또는 rejectValue() , reject()를 이용하여
+수동으로 validation 가능.
+
+둘의 차이점은 @Validated은 모델의 각각 필드값에 대한 검증이 편하고 BindingResult은 필드값끼리의 혼합 검증이 편하다.
+
+spring.messages.basename=messages,errors 을 추가하여 BindingResult을 검증메시지를 반환한다. 
+
+@Validated은 default 메시지가 있지만 위에 저장하면 그 메시지가 대신 반환된다.
+
+View 렌더링
+    
+    .field-error {
+         border-color: #dc3545;
+         color: #dc3545;
+     }
+오류가 뜨면 빨간 테두리를 채울 css class생성
+    
+    <div th:if="${#fields.hasGlobalErrors()}">
+            <p class="field-error" th:each="err : ${#fields.globalErrors()}" th:text="${err}">전체 오류 메시지</p>
+    </div>
+
+글로벌 error은 bindingResult로 만든 혼합 검증. 있으면 위의 p태그 생성
+    
+    <input type="text" id="itemName" th:field="*{itemName}"
+                   th:errorclss="field-error" class="form-control" placeholder="이름을 입력하세요">
+    <div class="field-error" th:errors="*{itemName}">
+
+오류가 있으면 th:errorclss을 이용하여 class 추가,th:errors 으로 오류메시지 text에반환
+
+예정:::: 쿠키 이용하여 로그인 기능 생성
