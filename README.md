@@ -133,3 +133,30 @@ View 렌더링
 오류가 있으면 th:errorclss을 이용하여 class 추가,th:errors 으로 오류메시지 text에반환
 
 예정:::: 쿠키 이용하여 로그인 기능 생성
+
+5 DAY
+
+세션관리 방법
+1.수동으로 Session 생성
+
+                 member 
+    1.(클라)Login------->(서버)createSession                          cookie
+    2.(서버)sessionStore에 <UUID,member>저장,쿠키 생성<Cookie_Name,UUID>------->클라
+    3.(클라)LoginHome------->(서버)getSession
+    4.(서버)쿠키들에서 Cookie_Name의 쿠키 찾기 null이면 비로그인 상태(home), null이 아니면             member
+      로그인 상태(LoginHoem)이므로 쿠키의 value(UUID)통해 sessionStore에서 UUID로 value(member)전덜 -------> 클라
+    정리:쿠키<Cookie_Name,uuid> 세션스토어 <uuid,member>    
+
+2.HttpSession(servlet 제공) 사용
+
+위의 해당과정을 자동으로 해줌
+    
+    로그인과정
+    1.HttpSession session = request.getSession();(default:true 없으면 새로운 세션 반환)
+      session.setAttribute(SessionConst.LOGIN_MEMBER, loginMember); 연결키=SessionConst.LOGIN_MEMBER
+    홈
+    2.HttpSession session = request.getSession(false);(세션 있으면 기존 세션 반환,없으면 null)
+      Member loginMember = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
+
+예정:::: 아직 items은 누구나 들어가지되어있다. 로그인한 사람만 자신의 items에 들어갈수 있도록 필터나 인터셉터 구현 예정
+

@@ -1,4 +1,4 @@
-package hompage.basic.domain;
+package hompage.basic.domain.item;
 
 
 import lombok.Data;
