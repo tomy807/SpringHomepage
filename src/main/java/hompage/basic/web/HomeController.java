@@ -2,6 +2,8 @@ package hompage.basic.web;
 
 
 import hompage.basic.domain.member.Member;
+import hompage.basic.web.argumentresolver.Login;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,15 +12,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @Controller
+@RequiredArgsConstructor
 public class HomeController {
 
     @GetMapping("/")
-    public String homeLogin(HttpServletRequest request, Model model) {
-        HttpSession session = request.getSession(false);
-        if (session == null) {
-            return "home";
-        }
-        Member loginMember = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
+    public String homeLogin(@Login Member loginMember, Model model) {
+
+        //로그인
         if (loginMember == null) {
             return "home";
         }
