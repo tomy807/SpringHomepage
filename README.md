@@ -137,6 +137,7 @@ View 렌더링
 5 DAY
 
 세션관리 방법
+         
 1.수동으로 Session 생성
 
                  member 
